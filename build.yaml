@@ -1,6 +1,8 @@
 repositories:
   remote:
    - http://repo1.maven.org/maven2
+   - http://download.eclipse.org/rt/eclipselink/maven.repo
+   - http://github.com/realityforge/repository/raw/master
 
 artifacts:
   javax_annotation: com.google.code.findbugs:jsr305:jar:1.3.9
