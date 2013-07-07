@@ -65,6 +65,10 @@ public class GeolatteExtension
     }
   }
 
+  /**
+   * Return the field associated with the specified name.
+   * Walk the parent class to locate the field as necessary.
+   */
   private Field getField( final Class type, final String attributeName )
   {
     Class t = type;
