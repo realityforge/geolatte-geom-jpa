@@ -20,7 +20,7 @@ import org.geolatte.geom.MultiPolygon;
 import org.geolatte.geom.Point;
 import org.geolatte.geom.Polygon;
 
-public class ConverterInitializer
+public class GeolatteExtension
   extends SessionEventAdapter
 {
   @Override
