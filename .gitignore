@@ -1,0 +1,8 @@
+/target
+/reports
+/*.iws
+/*.ipr
+/*.iml
+/_buildr.rb
+/Gemfile.lock
+/tmp
