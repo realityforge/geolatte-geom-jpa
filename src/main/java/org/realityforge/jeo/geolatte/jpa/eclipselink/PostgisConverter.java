@@ -35,9 +35,9 @@ public class PostgisConverter
     {
       return new PGgeometry( wkt );
     }
-    catch ( SQLException e )
+    catch ( final SQLException se )
     {
-      throw new IllegalStateException( "Failed converting geometry", e );
+      throw new IllegalStateException( "Failed converting geometry", se );
     }
   }
 
