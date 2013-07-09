@@ -6,6 +6,16 @@
   <persistence-unit name="GeolatteEclipselinkTest" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 
+    <class>org.realityforge.jeo.geolatte.jpa.eclipselink.TestGeometryEntity</class>
+    <class>org.realityforge.jeo.geolatte.jpa.eclipselink.TestGeometryCollectionEntity</class>
+    <class>org.realityforge.jeo.geolatte.jpa.eclipselink.TestLinearRingEntity</class>
+    <class>org.realityforge.jeo.geolatte.jpa.eclipselink.TestLineStringEntity</class>
+    <class>org.realityforge.jeo.geolatte.jpa.eclipselink.TestMultiLineStringEntity</class>
+    <class>org.realityforge.jeo.geolatte.jpa.eclipselink.TestMultiPointEntity</class>
+    <class>org.realityforge.jeo.geolatte.jpa.eclipselink.TestMultiPolygonEntity</class>
+    <class>org.realityforge.jeo.geolatte.jpa.eclipselink.TestPointEntity</class>
+    <class>org.realityforge.jeo.geolatte.jpa.eclipselink.TestPolygonEntity</class>
+
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
     <validation-mode>AUTO</validation-mode>
