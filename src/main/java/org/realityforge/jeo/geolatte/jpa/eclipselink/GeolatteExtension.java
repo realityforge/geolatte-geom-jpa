@@ -12,6 +12,7 @@ import org.eclipse.persistence.sessions.Session;
 import org.eclipse.persistence.sessions.SessionEvent;
 import org.eclipse.persistence.sessions.SessionEventAdapter;
 import org.geolatte.geom.Geometry;
+import org.geolatte.geom.GeometryCollection;
 import org.geolatte.geom.LineString;
 import org.geolatte.geom.LinearRing;
 import org.geolatte.geom.MultiLineString;
@@ -48,12 +49,13 @@ public class GeolatteExtension
             final Class<?> fieldType = field.getType();
             if ( Point.class == fieldType ||
                  Polygon.class == fieldType ||
+                 LinearRing.class == fieldType ||
                  LineString.class == fieldType ||
                  MultiPoint.class == fieldType ||
                  MultiPolygon.class == fieldType ||
                  MultiLineString.class == fieldType ||
                  Geometry.class == fieldType ||
-                 LinearRing.class == fieldType )
+                 GeometryCollection.class == fieldType )
             {
               final Converter converter = new PostgisConverter();
               converter.initialize( mapping, session );
