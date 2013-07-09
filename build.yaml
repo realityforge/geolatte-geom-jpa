@@ -7,7 +7,6 @@ repositories:
 artifacts:
   javax_annotation: com.google.code.findbugs:jsr305:jar:1.3.9
 
-  #geolatte_common: org.geolatte:geolatte-common:jar:0.5
   geolatte_geom: org.geolatte:geolatte-geom:jar:0.12-rf
   jts: com.vividsolutions:jts:jar:1.13
   slf4j_api: org.slf4j:slf4j-api:jar:1.6.6
