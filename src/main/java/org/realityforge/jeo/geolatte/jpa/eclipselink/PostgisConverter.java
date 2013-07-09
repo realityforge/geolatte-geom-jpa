@@ -50,19 +50,35 @@ public class PostgisConverter
     {
       return null;
     }
-    final String wkt;
     if ( dataValue instanceof PGgeometry )
     {
       final org.postgis.Geometry geometry = ( (PGgeometry) dataValue ).getGeometry();
-      wkt = geometry.toString();
+      return Wkt.newDecoder( Wkt.Dialect.POSTGIS_EWKT_1 ).decode( geometry.toString() );
+    }
+    else if ( dataValue instanceof String )
+    {
+      /*
+      In some circumstances the data will come back in WKB format (i.e. When using the Driver directly)
+      and sometimes it will be returned in WKT format (i.e. In GlassFish when using the DataSource) and
+      it is unclear what is causing the variance so support both scenarios.
+      */
+      final String wk = (String) dataValue;
+      final char ch = wk.charAt( 0 );
+      if( '0' == ch )
+      {
+        //Guess that it is in WKB format
+        return Wkb.newDecoder( Wkb.Dialect.POSTGIS_EWKB_1 ).decode( ByteBuffer.from( wk ) );
+      }
+      else
+      {
+        //Assume a WKT format
+        return Wkt.newDecoder( Wkt.Dialect.POSTGIS_EWKT_1 ).decode( wk );
+      }
     }
     else
     {
-      wkt = (String) dataValue;
+      throw new IllegalStateException( "Unable to convert data value:" + dataValue );
     }
-    //Stored as WKB ???
-    return Wkb.newDecoder( Wkb.Dialect.POSTGIS_EWKB_1 ).decode( ByteBuffer.from( wkt ) );
-    //return Wkt.newDecoder( Wkt.Dialect.POSTGIS_EWKT_1 ).decode( wkt );
   }
 
   @Override
