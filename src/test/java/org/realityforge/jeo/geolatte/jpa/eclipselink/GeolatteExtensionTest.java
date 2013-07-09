@@ -55,7 +55,9 @@ public final class GeolatteExtensionTest
     entityType.getMethod( "setGeom", geomType ).invoke( e2, geom );
 
     em.persist( e2 );
-    assertNotNull( em.find( entityType, 23 ) );
+    final Object e2FromDB = em.find( entityType, 23 );
+    assertNotNull( e2FromDB );
+    assertEquals( entityType.getMethod( "getGeom" ).invoke( entity ), geom );
     em.remove( e2 );
   }
 
