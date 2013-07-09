@@ -10,8 +10,8 @@ public class DatabaseTestUtil
   static Properties initDatabaseProperties()
   {
     final Properties properties = new Properties();
-    properties.put( "javax.persistence.jdbc.driver", "org.postgis.DriverWrapperAutoprobe" );
-    final String databaseUrl = "jdbc:postgresql_autogis://127.0.0.1:5432/geolatte_test";
+    properties.put( "javax.persistence.jdbc.driver", "org.postgresql.Driver" );
+    final String databaseUrl = "jdbc:postgresql://127.0.0.1:5432/geolatte_test";
     setProperty( properties, "javax.persistence.jdbc.url", "test.db.url", databaseUrl );
     setProperty( properties, "javax.persistence.jdbc.user", "test.db.user", "geolatte" );
     setProperty( properties, "javax.persistence.jdbc.password", "test.db.password", null );
