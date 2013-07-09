@@ -7,6 +7,7 @@ import org.eclipse.persistence.mappings.DatabaseMapping;
 import org.eclipse.persistence.mappings.DirectCollectionMapping;
 import org.eclipse.persistence.mappings.converters.Converter;
 import org.eclipse.persistence.sessions.Session;
+import org.geolatte.geom.ByteBuffer;
 import org.geolatte.geom.Geometry;
 import org.geolatte.geom.LineString;
 import org.geolatte.geom.LinearRing;
@@ -15,6 +16,7 @@ import org.geolatte.geom.MultiPoint;
 import org.geolatte.geom.MultiPolygon;
 import org.geolatte.geom.Point;
 import org.geolatte.geom.Polygon;
+import org.geolatte.geom.codec.Wkb;
 import org.geolatte.geom.codec.Wkt;
 import org.geolatte.geom.codec.Wkt.Dialect;
 import org.postgis.PGgeometry;
@@ -58,7 +60,9 @@ public class PostgisConverter
     {
       wkt = (String) dataValue;
     }
-    return Wkt.newDecoder( Dialect.POSTGIS_EWKT_1 ).decode( wkt );
+    //Stored as WKB ???
+    return Wkb.newDecoder( Wkb.Dialect.POSTGIS_EWKB_1 ).decode( ByteBuffer.from( wkt ) );
+    //return Wkt.newDecoder( Wkt.Dialect.POSTGIS_EWKT_1 ).decode( wkt );
   }
 
   @Override
