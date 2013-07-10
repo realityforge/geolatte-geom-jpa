@@ -59,6 +59,8 @@ public final class GeolatteExtensionTest
     assertNotNull( e2FromDB );
     assertEquals( entityType.getMethod( "getGeom" ).invoke( entity ), geom );
     em.remove( e2 );
+
+    em.close();
   }
 
   private void assertEntityClassPresent( final EntityManager em, final Class<?> entityClass )
