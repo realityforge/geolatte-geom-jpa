@@ -2,6 +2,8 @@ package org.realityforge.jeo.geolatte.jpa.eclipselink;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -65,7 +67,7 @@ final class DatabaseTestUtil
     final Connection connection = initConnection( true );
     try
     {
-      connection.createStatement().execute( "CREATE DATABASE geolatte_test" );
+      execute( connection, "CREATE DATABASE geolatte_test" );
     }
     finally
     {
@@ -74,7 +76,7 @@ final class DatabaseTestUtil
     final Connection connection2 = initConnection( false );
     try
     {
-      connection2.createStatement().execute( "CREATE EXTENSION postgis" );
+      execute( connection2, "CREATE EXTENSION postgis" );
     }
     finally
     {
@@ -88,16 +90,36 @@ final class DatabaseTestUtil
     final Connection connection = initConnection( true );
     try
     {
-      connection.createStatement().execute( "SELECT pg_terminate_backend(pg_stat_activity.pid)\n" +
-                                            "FROM pg_stat_activity\n" +
-                                            "WHERE pg_stat_activity.datname = 'geolatte_test'" );
-      connection.createStatement().execute( "DROP DATABASE geolatte_test" );
+      // Post 9.1 terminate option
+      final int majorVersion = connection.getMetaData().getDatabaseMajorVersion();
+      final int minorVersion = connection.getMetaData().getDatabaseMinorVersion();
+      final int version = majorVersion * 100 + minorVersion;
+      if ( version >= 902 )
+      {
+        execute( connection,
+                 "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'geolatte_test'" );
+      }
+      else
+      {
+        execute( connection,
+                 "SELECT pg_terminate_backend(pg_stat_activity.procpid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'geolatte_test'" );
+      }
+      execute( connection, "DROP DATABASE geolatte_test" );
     }
     finally
     {
       disposeConnection( connection );
     }
   }
+
+  private static void execute( final Connection connection, final String sql )
+    throws SQLException
+  {
+    final Statement statement = connection.createStatement();
+    statement.execute( sql );
+    statement.close();
+  }
+
   private static void disposeConnection( final Connection connection )
   {
     if ( null != connection )
