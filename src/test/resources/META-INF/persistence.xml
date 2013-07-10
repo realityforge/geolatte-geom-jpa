@@ -23,7 +23,7 @@
     <properties>
       <property name="eclipselink.logging.logger" value="JavaLogger"/>
       <property name="eclipselink.temporal.mutable" value="false"/>
-      <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+      <property name="eclipselink.ddl-generation" value="create-tables"/>
     </properties>
 
   </persistence-unit>
