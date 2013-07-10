@@ -9,11 +9,27 @@ import org.geolatte.geom.MultiPoint;
 import org.geolatte.geom.MultiPolygon;
 import org.geolatte.geom.Point;
 import org.geolatte.geom.Polygon;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 public final class GeolatteExtensionTest
 {
+  @BeforeMethod
+  public void setup()
+    throws Exception
+  {
+    DatabaseTestUtil.setupDatabase();
+  }
+
+  @AfterMethod
+  public void tearDown()
+    throws Exception
+  {
+    DatabaseTestUtil.tearDownDatabase();
+  }
+
   @Test
   public void basic()
     throws Exception
