@@ -76,13 +76,7 @@ public class SqlServerConverter
       field = mapping.getField();
     }
     field.setSqlType( java.sql.Types.OTHER );
-    if ( null == field.getTypeName() )
-    {
-      field.setTypeName( "geometry" );
-    }
-    if ( null == field.getColumnDefinition() )
-    {
-      field.setColumnDefinition( "geometry" );
-    }
+    field.setTypeName( "geometry" );
+    field.setColumnDefinition( "geometry" );
   }
 }
