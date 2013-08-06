@@ -11,7 +11,7 @@ public final class SqlServerGeolatteExtensionTest
     return false;
   }
 
-  @Test
+  @Test( groups = "sqlserver" )
   public void basic()
     throws Exception
   {

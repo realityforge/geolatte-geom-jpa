@@ -14,7 +14,7 @@ define 'geolatte-geom-eclipselink' do
                :postgresql,
                :postgis_jdbc
 
-  test.using :testng
+  test.using :testng, :excludegroups => ['sqlserver']
 
   test.with :jts,
             :slf4j_api,
