@@ -28,6 +28,34 @@ public class GeolatteExtension
   public void preLogin( final SessionEvent event )
   {
     final Session session = event.getSession();
+
+    boolean isSqlServer = false;
+    boolean isPostgreSQL = false;
+
+    final String geomDriver = (String) session.getProperty( "geolatte.geom.driver" );
+    if ( null != geomDriver )
+    {
+      isSqlServer = geomDriver.equals( "sqlserver" );
+      isPostgreSQL = geomDriver.equals( "postgres" );
+    }
+    else
+    {
+      final String driver = (String) session.getProperty( "javax.persistence.jdbc.driver" );
+      if ( null != driver )
+      {
+        isSqlServer = driver.contains( ".jtds." );
+        isPostgreSQL = driver.contains( "org.postgresql." );
+      }
+    }
+
+    if ( !isSqlServer && !isPostgreSQL )
+    {
+      final String message =
+        "Unable to determine database type. Explicitly set jpa " +
+        "property 'geolatte.geom.driver' to 'sqlserver' or 'postgres'" ;
+      throw new IllegalStateException( message );
+    }
+
     final Map<Class, ClassDescriptor> descriptorMap = session.getDescriptors();
 
     // Walk through all descriptors...
@@ -57,7 +85,7 @@ public class GeolatteExtension
                  Geometry.class == fieldType ||
                  GeometryCollection.class == fieldType )
             {
-              final Converter converter = new PostgisConverter();
+              final Converter converter = isSqlServer ? new SqlServerConverter() : new PostgisConverter();
               converter.initialize( mapping, session );
               dfm.setConverter( converter );
             }
