@@ -18,6 +18,7 @@ define 'geolatte-geom-eclipselink' do
 
   test.with :jts,
             :slf4j_api,
+            :jtds,
             :slf4j_jdk14
 
   package :jar

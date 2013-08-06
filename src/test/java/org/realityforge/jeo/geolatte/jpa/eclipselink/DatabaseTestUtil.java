@@ -20,13 +20,25 @@ final class DatabaseTestUtil
   {
   }
 
-  static Properties initDatabaseProperties( final boolean control )
+  private static Properties initDatabaseProperties( final boolean postgres, final boolean control )
   {
-    final String baseURL = System.getProperty( "test.db.base_url", "jdbc:postgresql://127.0.0.1:5432" );
-
     final Properties properties = new Properties();
-    properties.put( DRIVER_KEY, "org.postgresql.Driver" );
-    final String databaseUrl = baseURL + "/" + ( control ? "postgres" : "geolatte_test" );
+
+    final String defaultURL;
+    if ( postgres )
+    {
+      properties.put( DRIVER_KEY, "org.postgresql.Driver" );
+      defaultURL = "jdbc:postgresql://127.0.0.1:5432";
+    }
+    else
+    {
+      properties.put( DRIVER_KEY, "net.sourceforge.jtds.jdbc.Driver" );
+      properties.put( "eclipselink.ddl-generation", "drop-and-create-tables" );
+      defaultURL = "jdbc:jtds:sqlserver://127.0.0.1:1432/";
+    }
+
+    final String baseURL = System.getProperty( "test.db.base_url", defaultURL );
+    final String databaseUrl = baseURL + "/" + ( control ? ( postgres ? "postgres" : "master" ) : "geolatte_test" );
     setProperty( properties, URL_KEY, "test.db.url", databaseUrl );
     setProperty( properties, USER_KEY, "test.db.user", "postgres" );
     setProperty( properties, PASSWORD_KEY, "test.db.password", null );
@@ -46,25 +58,25 @@ final class DatabaseTestUtil
     }
   }
 
-  public static EntityManager createEntityManager( final String persistenceUnitName )
+  static EntityManager createEntityManager( final boolean postgres, final String persistenceUnitName )
   {
-    final Properties properties = initDatabaseProperties( false );
+    final Properties properties = initDatabaseProperties( postgres, false );
     final EntityManagerFactory factory = Persistence.createEntityManagerFactory( persistenceUnitName, properties );
     return factory.createEntityManager();
   }
 
-  public static void setupDatabase()
+  static void setupDatabase( final boolean postgres )
     throws Exception
   {
     try
     {
-      tearDownDatabase();
+      tearDownDatabase( postgres );
     }
     catch ( Exception e )
     {
       //Ignore
     }
-    final Connection connection = initConnection( true );
+    final Connection connection = initConnection( postgres, true );
     try
     {
       execute( connection, "CREATE DATABASE geolatte_test" );
@@ -73,36 +85,42 @@ final class DatabaseTestUtil
     {
       disposeConnection( connection );
     }
-    final Connection connection2 = initConnection( false );
-    try
+    if ( postgres )
     {
-      execute( connection2, "CREATE EXTENSION postgis" );
-    }
-    finally
-    {
-      disposeConnection( connection2 );
+      final Connection connection2 = initConnection( postgres, false );
+      try
+      {
+        execute( connection2, "CREATE EXTENSION postgis" );
+      }
+      finally
+      {
+        disposeConnection( connection2 );
+      }
     }
   }
 
-  static void tearDownDatabase()
+  static void tearDownDatabase( final boolean postgres )
     throws Exception
   {
-    final Connection connection = initConnection( true );
+    final Connection connection = initConnection( postgres, true );
     try
     {
-      // Post 9.1 terminate option
-      final int majorVersion = connection.getMetaData().getDatabaseMajorVersion();
-      final int minorVersion = connection.getMetaData().getDatabaseMinorVersion();
-      final int version = majorVersion * 100 + minorVersion;
-      if ( version >= 902 )
+      if ( "PostgreSQL Native Driver".equals( connection.getMetaData().getDriverName() ) )
       {
-        execute( connection,
-                 "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'geolatte_test'" );
-      }
-      else
-      {
-        execute( connection,
-                 "SELECT pg_terminate_backend(pg_stat_activity.procpid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'geolatte_test'" );
+        // Post 9.1 terminate option
+        final int majorVersion = connection.getMetaData().getDatabaseMajorVersion();
+        final int minorVersion = connection.getMetaData().getDatabaseMinorVersion();
+        final int version = majorVersion * 100 + minorVersion;
+        if ( version >= 902 )
+        {
+          execute( connection,
+                   "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'geolatte_test'" );
+        }
+        else
+        {
+          execute( connection,
+                   "SELECT pg_terminate_backend(pg_stat_activity.procpid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'geolatte_test'" );
+        }
       }
       execute( connection, "DROP DATABASE geolatte_test" );
     }
@@ -135,9 +153,9 @@ final class DatabaseTestUtil
     }
   }
 
-  private static Connection initConnection( final boolean control )
+  private static Connection initConnection( final boolean postgres, final boolean control )
   {
-    final Properties properties = initDatabaseProperties( control );
+    final Properties properties = initDatabaseProperties( postgres, control );
     try
     {
       Class.forName( properties.getProperty( DRIVER_KEY ) );

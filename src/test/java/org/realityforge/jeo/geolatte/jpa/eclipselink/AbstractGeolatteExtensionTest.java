@@ -11,7 +11,6 @@ import org.geolatte.geom.Point;
 import org.geolatte.geom.Polygon;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 public abstract class AbstractGeolatteExtensionTest
@@ -22,14 +21,14 @@ public abstract class AbstractGeolatteExtensionTest
   public void setup()
     throws Exception
   {
-    DatabaseTestUtil.setupDatabase();
+    DatabaseTestUtil.setupDatabase( isPostgres() );
   }
 
   @AfterMethod
   public void tearDown()
     throws Exception
   {
-    DatabaseTestUtil.tearDownDatabase();
+    DatabaseTestUtil.tearDownDatabase( isPostgres() );
   }
 
   protected void performTests()
@@ -81,14 +80,14 @@ public abstract class AbstractGeolatteExtensionTest
                          final String value )
     throws Exception
   {
-    final EntityManager em = DatabaseTestUtil.createEntityManager( "GeolatteEclipselinkTest" );
+    final EntityManager em = DatabaseTestUtil.createEntityManager( isPostgres(), "GeolatteEclipselinkTest" );
 
     assertEntityClassPresent( em, entityType );
 
     assertNull( em.find( entityType, 22 ) );
 
     em.getTransaction().begin();
-    final String fromTextFunction = postgres ? "ST_GeometryFromText(?)" : "geometry::STGeomFromText(?)" ;
+    final String fromTextFunction = postgres ? "ST_GeometryFromText(?)" : "geometry::STGeomFromText(?,0)" ;
     final String insertSQL =
       "INSERT INTO " + entityType.getSimpleName() + "(id,geom) VALUES (22," + fromTextFunction + ")" ;
     em.createNativeQuery( insertSQL ).setParameter( 1, value ).executeUpdate();
