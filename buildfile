@@ -23,4 +23,5 @@ define 'geolatte-geom-eclipselink' do
 
   package :jar
   package :sources
+  package :javadoc
 end
