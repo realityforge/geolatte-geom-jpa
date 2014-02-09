@@ -8,6 +8,12 @@ define 'geolatte-geom-eclipselink' do
   compile.options.target = '1.6'
   compile.options.lint = 'all'
 
+  pom.add_apache2_license
+  pom.add_github_project('realityforge/geolatte-geom-eclipselink')
+  pom.add_developer('realityforge', 'Peter Donald')
+  pom.provided_dependencies.concat [:javax_persistence, :eclipselink]
+  pom.optional_dependencies.concat [:postgresql, :postgis_jdbc]
+
   compile.with :javax_persistence,
                :eclipselink,
                :geolatte_geom,
