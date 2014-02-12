@@ -8,6 +8,8 @@ define 'geolatte-geom-eclipselink' do
   compile.options.target = '1.7'
   compile.options.lint = 'all'
 
+  project.version = ENV['PRODUCT_VERSION'] if ENV['PRODUCT_VERSION']
+
   pom.add_apache2_license
   pom.add_github_project('realityforge/geolatte-geom-jpa')
   pom.add_developer('realityforge', 'Peter Donald')
