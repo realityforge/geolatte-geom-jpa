@@ -1,8 +1,8 @@
 require 'buildr/git_auto_version'
 
-desc 'Geolatte-Eclipselink Converters'
-define 'geolatte-geom-eclipselink' do
-  project.group = 'org.realityforge.jeo.geolatte.jpa.eclipselink'
+desc 'Geolatte-JPA Converters'
+define 'geolatte-geom-jpa' do
+  project.group = 'org.realityforge.geolatte.jpa'
 
   compile.options.source = '1.7'
   compile.options.target = '1.7'
