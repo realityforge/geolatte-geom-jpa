@@ -11,10 +11,12 @@ define 'geolatte-geom-eclipselink' do
   pom.add_apache2_license
   pom.add_github_project('realityforge/geolatte-geom-eclipselink')
   pom.add_developer('realityforge', 'Peter Donald')
-  pom.provided_dependencies.concat [:javax_persistence, :eclipselink]
+  pom.provided_dependencies.concat [:javax_jsr305, :javaee_api, :javax_javaee_endorsed, :eclipselink]
   pom.optional_dependencies.concat [:postgresql, :postgis_jdbc]
 
-  compile.with :javax_persistence,
+  compile.with :javax_jsr305,
+               :javaee_api,
+               :javax_javaee_endorsed,
                :eclipselink,
                :geolatte_geom,
                :postgresql,
