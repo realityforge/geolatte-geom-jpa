@@ -1,5 +1,8 @@
 require 'buildr/git_auto_version'
 
+PROVIDED_DEPS = [:javax_jsr305, :javaee_api, :javax_javaee_endorsed]
+OPTIONAL_DEPS = [:postgresql, :postgis_jdbc]
+
 desc 'Geolatte-JPA Converters'
 define 'geolatte-geom-jpa' do
   project.group = 'org.realityforge.geolatte.jpa'
@@ -13,20 +16,15 @@ define 'geolatte-geom-jpa' do
   pom.add_apache2_license
   pom.add_github_project('realityforge/geolatte-geom-jpa')
   pom.add_developer('realityforge', 'Peter Donald')
-  pom.provided_dependencies.concat [:javax_jsr305, :javaee_api, :javax_javaee_endorsed, :eclipselink]
-  pom.optional_dependencies.concat [:postgresql, :postgis_jdbc]
+  pom.provided_dependencies.concat PROVIDED_DEPS
+  pom.optional_dependencies.concat OPTIONAL_DEPS
 
-  compile.with :javax_jsr305,
-               :javaee_api,
-               :javax_javaee_endorsed,
-               :eclipselink,
-               :geolatte_geom,
-               :postgresql,
-               :postgis_jdbc
+  compile.with PROVIDED_DEPS, OPTIONAL_DEPS, :geolatte_geom
 
   test.using :testng, :excludegroups => ['sqlserver']
 
-  test.with :jts,
+  test.with :eclipselink,
+            :jts,
             :slf4j_api,
             :jtds,
             :slf4j_jdk14
