@@ -1,13 +1,15 @@
-package org.realityforge.jeo.geolatte.jpa.eclipselink;
+package org.realityforge.jeo.geolatte.jpa.pg;
 
 import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import org.geolatte.geom.LinearRing;
+import org.geolatte.geom.LineString;
+import org.realityforge.jeo.geolatte.jpa.PostgisConverter;
 
 @Entity
-public class TestLinearRingEntity
+public class PgLineStringEntity
   implements Serializable
 {
   @Id
@@ -15,7 +17,8 @@ public class TestLinearRingEntity
   private Integer _id;
 
   @Column( name = "geom" )
-  private LinearRing _geom;
+  @Convert( converter = PostgisConverter.class )
+  private LineString _geom;
 
   public Integer getId()
   {
@@ -27,12 +30,12 @@ public class TestLinearRingEntity
     _id = id;
   }
 
-  public LinearRing getGeom()
+  public LineString getGeom()
   {
     return _geom;
   }
 
-  public void setGeom( final LinearRing geom )
+  public void setGeom( final LineString geom )
   {
     _geom = geom;
   }

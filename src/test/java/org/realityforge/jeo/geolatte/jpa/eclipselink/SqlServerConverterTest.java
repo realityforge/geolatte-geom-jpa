@@ -2,8 +2,8 @@ package org.realityforge.jeo.geolatte.jpa.eclipselink;
 
 import org.testng.annotations.Test;
 
-public final class SqlServerGeolatteExtensionTest
-  extends AbstractGeolatteExtensionTest
+public final class SqlServerConverterTest
+  extends AbstractConverterTest
 {
   @Override
   protected boolean isPostgres()

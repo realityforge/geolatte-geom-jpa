@@ -1,22 +1,24 @@
-package org.realityforge.jeo.geolatte.jpa.eclipselink;
+package org.realityforge.jeo.geolatte.jpa.mssql;
 
 import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import org.geolatte.geom.LineString;
-import org.geolatte.geom.MultiLineString;
+import org.realityforge.jeo.geolatte.jpa.SqlServerConverter;
 
 @Entity
-public class TestMultiLineStringEntity
+public class MsLineStringEntity
   implements Serializable
 {
   @Id
   @Column( name = "id" )
   private Integer _id;
 
-  @Column( name = "geom" )
-  private MultiLineString _geom;
+  @Column( name = "geom", columnDefinition = "GEOMETRY" )
+  @Convert( converter = SqlServerConverter.class )
+  private LineString _geom;
 
   public Integer getId()
   {
@@ -28,12 +30,12 @@ public class TestMultiLineStringEntity
     _id = id;
   }
 
-  public MultiLineString getGeom()
+  public LineString getGeom()
   {
     return _geom;
   }
 
-  public void setGeom( final MultiLineString geom )
+  public void setGeom( final LineString geom )
   {
     _geom = geom;
   }

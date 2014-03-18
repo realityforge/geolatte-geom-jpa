@@ -42,7 +42,6 @@ final class DatabaseTestUtil
     setProperty( properties, URL_KEY, "test.db.url", databaseUrl );
     setProperty( properties, USER_KEY, "test.db.user", "postgres" );
     setProperty( properties, PASSWORD_KEY, "test.db.password", null );
-    properties.put( "eclipselink.session-event-listener", GeolatteExtension.class.getName() );
     return properties;
   }
 

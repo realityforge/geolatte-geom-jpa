@@ -1,13 +1,15 @@
-package org.realityforge.jeo.geolatte.jpa.eclipselink;
+package org.realityforge.jeo.geolatte.jpa.pg;
 
 import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import org.geolatte.geom.Point;
+import org.geolatte.geom.MultiPoint;
+import org.realityforge.jeo.geolatte.jpa.PostgisConverter;
 
 @Entity
-public class TestPointEntity
+public class PgMultiPointEntity
   implements Serializable
 {
   @Id
@@ -15,7 +17,8 @@ public class TestPointEntity
   private Integer _id;
 
   @Column( name = "geom" )
-  private Point _geom;
+  @Convert( converter = PostgisConverter.class )
+  private MultiPoint _geom;
 
   public Integer getId()
   {
@@ -27,12 +30,12 @@ public class TestPointEntity
     _id = id;
   }
 
-  public Point getGeom()
+  public MultiPoint getGeom()
   {
     return _geom;
   }
 
-  public void setGeom( final Point geom )
+  public void setGeom( final MultiPoint geom )
   {
     _geom = geom;
   }

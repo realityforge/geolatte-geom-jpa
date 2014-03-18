@@ -9,11 +9,27 @@ import org.geolatte.geom.MultiPoint;
 import org.geolatte.geom.MultiPolygon;
 import org.geolatte.geom.Point;
 import org.geolatte.geom.Polygon;
+import org.realityforge.jeo.geolatte.jpa.mssql.MsGeometryCollectionEntity;
+import org.realityforge.jeo.geolatte.jpa.mssql.MsGeometryEntity;
+import org.realityforge.jeo.geolatte.jpa.mssql.MsLineStringEntity;
+import org.realityforge.jeo.geolatte.jpa.mssql.MsMultiLineStringEntity;
+import org.realityforge.jeo.geolatte.jpa.mssql.MsMultiPointEntity;
+import org.realityforge.jeo.geolatte.jpa.mssql.MsMultiPolygonEntity;
+import org.realityforge.jeo.geolatte.jpa.mssql.MsPointEntity;
+import org.realityforge.jeo.geolatte.jpa.mssql.MsPolygonEntity;
+import org.realityforge.jeo.geolatte.jpa.pg.PgGeometryCollectionEntity;
+import org.realityforge.jeo.geolatte.jpa.pg.PgGeometryEntity;
+import org.realityforge.jeo.geolatte.jpa.pg.PgLineStringEntity;
+import org.realityforge.jeo.geolatte.jpa.pg.PgMultiLineStringEntity;
+import org.realityforge.jeo.geolatte.jpa.pg.PgMultiPointEntity;
+import org.realityforge.jeo.geolatte.jpa.pg.PgMultiPolygonEntity;
+import org.realityforge.jeo.geolatte.jpa.pg.PgPointEntity;
+import org.realityforge.jeo.geolatte.jpa.pg.PgPolygonEntity;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import static org.testng.Assert.*;
 
-public abstract class AbstractGeolatteExtensionTest
+public abstract class AbstractConverterTest
 {
   protected abstract boolean isPostgres();
 
@@ -41,35 +57,35 @@ public abstract class AbstractGeolatteExtensionTest
     throws Exception
   {
     testType( postgres,
-              TestGeometryEntity.class,
+              postgres ? PgGeometryEntity.class : MsGeometryEntity.class,
               Geometry.class,
               "POINT ( 1 1 )" );
     testType( postgres,
-              TestGeometryCollectionEntity.class,
+              postgres ? PgGeometryCollectionEntity.class : MsGeometryCollectionEntity.class,
               GeometryCollection.class,
               "GEOMETRYCOLLECTION ( POINT ( 1 1 ) , POINT ( 1 1 ))" );
     testType( postgres,
-              TestPointEntity.class,
+              postgres ? PgPointEntity.class : MsPointEntity.class,
               Point.class,
               "POINT ( 1 1 )" );
     testType( postgres,
-              TestMultiPointEntity.class,
+              postgres ? PgMultiPointEntity.class : MsMultiPointEntity.class,
               MultiPoint.class,
               "MULTIPOINT ( (100.0 0.0) , (101.0 1.0) )" );
     testType( postgres,
-              TestLineStringEntity.class,
+              postgres ? PgLineStringEntity.class : MsLineStringEntity.class,
               LineString.class,
               "LINESTRING ( 1 1, 2 1 )" );
     testType( postgres,
-              TestMultiLineStringEntity.class,
+              postgres ? PgMultiLineStringEntity.class : MsMultiLineStringEntity.class,
               MultiLineString.class,
               "MULTILINESTRING ( ( 100.0 0.0, 101.0 1.0 ), ( 102.0 2.0, 103.0 3.0 ) )" );
     testType( postgres,
-              TestPolygonEntity.class,
+              postgres ? PgPolygonEntity.class : MsPolygonEntity.class,
               Polygon.class,
               "POLYGON((100.0 0.0, 101.0 0.0, 101.0 1.0, 100.0 0.0))" );
     testType( postgres,
-              TestMultiPolygonEntity.class,
+              postgres ? PgMultiPolygonEntity.class : MsMultiPolygonEntity.class,
               MultiPolygon.class,
               "MULTIPOLYGON(((100.0 0.0, 101.0 0.0, 101.0 1.0, 100.0 0.0)))" );
   }
@@ -87,9 +103,9 @@ public abstract class AbstractGeolatteExtensionTest
     assertNull( em.find( entityType, 22 ) );
 
     em.getTransaction().begin();
-    final String fromTextFunction = postgres ? "ST_GeometryFromText(?)" : "geometry::STGeomFromText(?,0)" ;
+    final String fromTextFunction = postgres ? "ST_GeometryFromText(?)" : "geometry::STGeomFromText(?,0)";
     final String insertSQL =
-      "INSERT INTO " + entityType.getSimpleName() + "(id,geom) VALUES (22," + fromTextFunction + ")" ;
+      "INSERT INTO " + entityType.getSimpleName() + "(id,geom) VALUES (22," + fromTextFunction + ")";
     em.createNativeQuery( insertSQL ).setParameter( 1, value ).executeUpdate();
     em.getTransaction().commit();
 

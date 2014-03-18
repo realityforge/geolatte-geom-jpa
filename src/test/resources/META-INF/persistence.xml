@@ -6,15 +6,27 @@
   <persistence-unit name="GeolatteEclipselinkTest" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 
-    <class>org.realityforge.jeo.geolatte.jpa.eclipselink.TestGeometryEntity</class>
-    <class>org.realityforge.jeo.geolatte.jpa.eclipselink.TestGeometryCollectionEntity</class>
-    <class>org.realityforge.jeo.geolatte.jpa.eclipselink.TestLinearRingEntity</class>
-    <class>org.realityforge.jeo.geolatte.jpa.eclipselink.TestLineStringEntity</class>
-    <class>org.realityforge.jeo.geolatte.jpa.eclipselink.TestMultiLineStringEntity</class>
-    <class>org.realityforge.jeo.geolatte.jpa.eclipselink.TestMultiPointEntity</class>
-    <class>org.realityforge.jeo.geolatte.jpa.eclipselink.TestMultiPolygonEntity</class>
-    <class>org.realityforge.jeo.geolatte.jpa.eclipselink.TestPointEntity</class>
-    <class>org.realityforge.jeo.geolatte.jpa.eclipselink.TestPolygonEntity</class>
+    <class>org.realityforge.jeo.geolatte.jpa.pg.PgGeometryEntity</class>
+    <class>org.realityforge.jeo.geolatte.jpa.pg.PgGeometryCollectionEntity</class>
+    <class>org.realityforge.jeo.geolatte.jpa.pg.PgLinearRingEntity</class>
+    <class>org.realityforge.jeo.geolatte.jpa.pg.PgLineStringEntity</class>
+    <class>org.realityforge.jeo.geolatte.jpa.pg.PgMultiLineStringEntity</class>
+    <class>org.realityforge.jeo.geolatte.jpa.pg.PgMultiPointEntity</class>
+    <class>org.realityforge.jeo.geolatte.jpa.pg.PgMultiPolygonEntity</class>
+    <class>org.realityforge.jeo.geolatte.jpa.pg.PgPointEntity</class>
+    <class>org.realityforge.jeo.geolatte.jpa.pg.PgPolygonEntity</class>
+    <class>org.realityforge.jeo.geolatte.jpa.PostgisConverter</class>
+
+    <class>org.realityforge.jeo.geolatte.jpa.mssql.MsGeometryEntity</class>
+    <class>org.realityforge.jeo.geolatte.jpa.mssql.MsGeometryCollectionEntity</class>
+    <class>org.realityforge.jeo.geolatte.jpa.mssql.MsLinearRingEntity</class>
+    <class>org.realityforge.jeo.geolatte.jpa.mssql.MsLineStringEntity</class>
+    <class>org.realityforge.jeo.geolatte.jpa.mssql.MsMultiLineStringEntity</class>
+    <class>org.realityforge.jeo.geolatte.jpa.mssql.MsMultiPointEntity</class>
+    <class>org.realityforge.jeo.geolatte.jpa.mssql.MsMultiPolygonEntity</class>
+    <class>org.realityforge.jeo.geolatte.jpa.mssql.MsPointEntity</class>
+    <class>org.realityforge.jeo.geolatte.jpa.mssql.MsPolygonEntity</class>
+    <class>org.realityforge.jeo.geolatte.jpa.SqlServerConverter</class>
 
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>

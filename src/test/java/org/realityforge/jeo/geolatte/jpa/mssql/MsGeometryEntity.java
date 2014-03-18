@@ -1,22 +1,24 @@
-package org.realityforge.jeo.geolatte.jpa.eclipselink;
+package org.realityforge.jeo.geolatte.jpa.mssql;
 
 import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import org.geolatte.geom.Geometry;
-import org.geolatte.geom.GeometryCollection;
+import org.realityforge.jeo.geolatte.jpa.SqlServerConverter;
 
 @Entity
-public class TestGeometryCollectionEntity
+public class MsGeometryEntity
   implements Serializable
 {
   @Id
   @Column( name = "id" )
   private Integer _id;
 
-  @Column( name = "geom" )
-  private GeometryCollection _geom;
+  @Column( name = "geom", columnDefinition = "GEOMETRY")
+  @Convert( converter = SqlServerConverter.class )
+  private Geometry _geom;
 
   public Integer getId()
   {
@@ -28,12 +30,12 @@ public class TestGeometryCollectionEntity
     _id = id;
   }
 
-  public GeometryCollection getGeom()
+  public Geometry getGeom()
   {
     return _geom;
   }
 
-  public void setGeom( final GeometryCollection geom )
+  public void setGeom( final Geometry geom )
   {
     _geom = geom;
   }

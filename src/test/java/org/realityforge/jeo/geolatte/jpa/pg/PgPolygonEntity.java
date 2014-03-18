@@ -1,14 +1,15 @@
-package org.realityforge.jeo.geolatte.jpa.eclipselink;
+package org.realityforge.jeo.geolatte.jpa.pg;
 
 import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import org.geolatte.geom.Geometry;
 import org.geolatte.geom.Polygon;
+import org.realityforge.jeo.geolatte.jpa.PostgisConverter;
 
 @Entity
-public class TestGeometryEntity
+public class PgPolygonEntity
   implements Serializable
 {
   @Id
@@ -16,7 +17,8 @@ public class TestGeometryEntity
   private Integer _id;
 
   @Column( name = "geom" )
-  private Geometry _geom;
+  @Convert( converter = PostgisConverter.class )
+  private Polygon _geom;
 
   public Integer getId()
   {
@@ -28,12 +30,12 @@ public class TestGeometryEntity
     _id = id;
   }
 
-  public Geometry getGeom()
+  public Polygon getGeom()
   {
     return _geom;
   }
 
-  public void setGeom( final Geometry geom )
+  public void setGeom( final Polygon geom )
   {
     _geom = geom;
   }

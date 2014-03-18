@@ -1,21 +1,23 @@
-package org.realityforge.jeo.geolatte.jpa.eclipselink;
+package org.realityforge.jeo.geolatte.jpa.mssql;
 
 import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import org.geolatte.geom.MultiPolygon;
-import org.geolatte.geom.Polygon;
+import org.realityforge.jeo.geolatte.jpa.SqlServerConverter;
 
 @Entity
-public class TestMultiPolygonEntity
+public class MsMultiPolygonEntity
   implements Serializable
 {
   @Id
   @Column( name = "id" )
   private Integer _id;
 
-  @Column( name = "geom" )
+  @Column( name = "geom", columnDefinition = "GEOMETRY" )
+  @Convert( converter = SqlServerConverter.class )
   private MultiPolygon _geom;
 
   public Integer getId()
