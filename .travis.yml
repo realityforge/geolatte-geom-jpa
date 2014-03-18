@@ -8,9 +8,6 @@ install:
   - rvm use 1.9.3
   - gem install bundler
   - bundle install
-  - echo "yes" | sudo apt-add-repository ppa:sharpie/for-science
-  - echo "yes" | sudo apt-add-repository ppa:sharpie/postgis-stable
-  - echo "yes" | sudo apt-add-repository ppa:ubuntugis/ubuntugis-unstable
   - sudo apt-get update
-  - sudo apt-get install python-software-properties postgresql-9.1-postgis2
+  - sudo apt-get install -qq libgeos++-dev libproj-dev build-essential liblzo2-dev liblzma-dev zlib1g-dev libprotobuf-c0-dev postgresql-contrib-9.3 postgresql-9.3-postgis-2.1-scripts
 script: buildr clean package
