@@ -1,4 +1,4 @@
-package org.realityforge.jeo.geolatte.jpa.eclipselink;
+package org.realityforge.jeo.geolatte.jpa;
 
 import org.testng.annotations.Test;
 

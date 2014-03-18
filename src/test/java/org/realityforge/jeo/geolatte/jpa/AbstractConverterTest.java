@@ -1,4 +1,4 @@
-package org.realityforge.jeo.geolatte.jpa.eclipselink;
+package org.realityforge.jeo.geolatte.jpa;
 
 import javax.persistence.EntityManager;
 import org.geolatte.geom.Geometry;

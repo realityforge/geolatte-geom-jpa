@@ -1,4 +1,4 @@
-package org.realityforge.jeo.geolatte.jpa.eclipselink;
+package org.realityforge.jeo.geolatte.jpa;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
