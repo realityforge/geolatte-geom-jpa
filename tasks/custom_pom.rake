@@ -155,6 +155,12 @@ module RealityForge
                 xml.version dependency[:version]
                 xml.scope dependency[:scope] unless dependency[:scope] == "compile"
                 xml.optional true if dependency[:optional]
+                xml.exclusions do
+                  xml.exclusion do
+                    xml.groupId '*'
+                    xml.artifactId '*'
+                  end
+                end
               end
             end
           end
