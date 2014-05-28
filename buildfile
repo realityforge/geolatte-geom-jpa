@@ -1,6 +1,6 @@
 require 'buildr/git_auto_version'
 require 'buildr/gpg'
-require 'buildr/cusstom_pom'
+require 'buildr/custom_pom'
 
 PROVIDED_DEPS = [:javax_jsr305, :javaee_api, :javax_javaee_endorsed]
 OPTIONAL_DEPS = [:postgresql, :postgis_jdbc]
