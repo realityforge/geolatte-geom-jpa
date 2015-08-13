@@ -14,7 +14,6 @@ import org.postgis.PGgeometry;
 public class PostgisConverter<T extends Geometry>
   implements AttributeConverter<T, Object>
 {
-
   @Override
   @SuppressWarnings( "unchecked" )
   public T convertToEntityAttribute( final Object dbData )
