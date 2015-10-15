@@ -9,6 +9,7 @@ import org.geolatte.geom.codec.Wkb;
 import org.geolatte.geom.codec.Wkt;
 import org.geolatte.geom.codec.Wkt.Dialect;
 import org.postgis.PGgeometry;
+import org.postgresql.util.PGobject;
 
 @Converter
 public class PostgisConverter<T extends Geometry>
@@ -58,7 +59,9 @@ public class PostgisConverter<T extends Geometry>
   {
     if ( null == attribute )
     {
-      return null;
+      final PGobject pgObject = new PGobject();
+      pgObject.setType( "geometry" );
+      return pgObject;
     }
     final String wkt = Wkt.newEncoder( Dialect.POSTGIS_EWKT_1 ).encode( attribute );
     try
