@@ -7,7 +7,7 @@ artifacts:
   javaee_api: javax:javaee-api:jar:7.0
   javax_javaee_endorsed: javax:javaee-endorsed-api:jar:7.0
 
-  geolatte_geom: org.geolatte:geolatte-geom:jar:0.12
+  geolatte_geom: org.geolatte:geolatte-geom:jar:1.0.1
   jts: com.vividsolutions:jts:jar:1.13
   slf4j_api: org.slf4j:slf4j-api:jar:1.6.6
   slf4j_jdk14: org.slf4j:slf4j-jdk14:jar:1.6.6

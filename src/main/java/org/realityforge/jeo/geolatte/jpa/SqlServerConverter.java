@@ -5,8 +5,8 @@ import java.sql.SQLException;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 import org.geolatte.geom.Geometry;
-import org.geolatte.geom.codec.sqlserver.Decoders;
-import org.geolatte.geom.codec.sqlserver.Encoders;
+import org.geolatte.geom.codec.db.sqlserver.Decoders;
+import org.geolatte.geom.codec.db.sqlserver.Encoders;
 
 @Converter
 public class SqlServerConverter<T extends Geometry>
