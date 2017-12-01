@@ -1,3 +1,3 @@
 source 'http://rubygems.org'
 
-gem 'buildr', '= 1.5.3'
+gem 'buildr', '= 1.5.4'
