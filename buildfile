@@ -8,8 +8,8 @@ desc 'Geolatte-JPA Converters'
 define 'geolatte-geom-jpa' do
   project.group = 'org.realityforge.geolatte.jpa'
 
-  compile.options.source = '1.7'
-  compile.options.target = '1.7'
+  compile.options.source = '1.8'
+  compile.options.target = '1.8'
   compile.options.lint = 'all'
 
   project.version = ENV['PRODUCT_VERSION'] if ENV['PRODUCT_VERSION']
