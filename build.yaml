@@ -3,7 +3,7 @@ repositories:
    - http://repo1.maven.org/maven2
 
 artifacts:
-  javax_jsr305: org.realityforge.javax.annotation:javax.annotation:jar:1.0.0
+  javax_annotation: org.realityforge.javax.annotation:javax.annotation:jar:1.0.0
   javaee_api: javax:javaee-api:jar:7.0
   javax_javaee_endorsed: javax:javaee-endorsed-api:jar:7.0
 
