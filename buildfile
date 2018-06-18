@@ -1,7 +1,7 @@
 require 'buildr/git_auto_version'
 require 'buildr/gpg'
 
-PROVIDED_DEPS = [:javax_jsr305, :javaee_api, :javax_javaee_endorsed]
+PROVIDED_DEPS = [:javax_annotation, :javaee_api, :javax_javaee_endorsed]
 OPTIONAL_DEPS = [:postgresql, :postgis_jdbc]
 
 desc 'Geolatte-JPA Converters'
