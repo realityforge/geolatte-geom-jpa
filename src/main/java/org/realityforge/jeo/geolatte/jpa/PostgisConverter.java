@@ -11,8 +11,9 @@ import org.geolatte.geom.codec.Wkt.Dialect;
 import org.postgis.PGgeometry;
 import org.postgresql.util.PGobject;
 
+@SuppressWarnings("rawtypes")
 @Converter
-public class PostgisConverter<T extends Geometry<?>>
+public class PostgisConverter<T extends Geometry>
   implements AttributeConverter<T, Object>
 {
   @Override
