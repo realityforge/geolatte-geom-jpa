@@ -8,7 +8,6 @@ rvm:
 services:
   - postgresql
 install:
-  - rvm use 2.6.6
   - gem install bundler
   - bundle install
 script: buildr clean package
