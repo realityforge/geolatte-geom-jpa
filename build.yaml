@@ -13,6 +13,8 @@ artifacts:
   slf4j_jdk14: org.slf4j:slf4j-jdk14:jar:1.6.6
 
   eclipselink: org.eclipse.persistence:eclipselink:jar:2.5.1
-  postgresql: postgresql:postgresql:jar:9.1-901.jdbc4
-  postgis_jdbc: org.postgis:postgis-jdbc:jar:1.3.3
+  postgresql: org.postgresql:postgresql:jar:42.2.11
+  postgis_jdbc: net.postgis:postgis-jdbc:jar:2.5.0
+  postgis_geometry: net.postgis:postgis-geometry:jar:2.5.0
+
   jtds: net.sourceforge.jtds:jtds:jar:1.3.1

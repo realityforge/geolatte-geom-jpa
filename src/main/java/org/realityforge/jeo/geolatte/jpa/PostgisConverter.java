@@ -12,7 +12,7 @@ import org.postgis.PGgeometry;
 import org.postgresql.util.PGobject;
 
 @Converter
-public class PostgisConverter<T extends Geometry>
+public class PostgisConverter<T extends Geometry<?>>
   implements AttributeConverter<T, Object>
 {
   @Override
