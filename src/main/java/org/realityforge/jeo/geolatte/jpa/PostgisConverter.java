@@ -11,13 +11,12 @@ import org.geolatte.geom.codec.Wkt.Dialect;
 import org.postgis.PGgeometry;
 import org.postgresql.util.PGobject;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings({"rawtypes", "unchecked"})
 @Converter
 public class PostgisConverter<T extends Geometry>
   implements AttributeConverter<T, Object>
 {
   @Override
-  @SuppressWarnings( "unchecked" )
   public T convertToEntityAttribute( final Object dbData )
   {
     if ( null == dbData )
