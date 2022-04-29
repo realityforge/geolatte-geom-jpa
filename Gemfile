@@ -1,3 +1,3 @@
 source 'https://rubygems.org'
 
-gem 'realityforge-buildr', '= 1.5.20'
+gem 'realityforge-buildr', '= 1.5.21'
